@@ -55,6 +55,9 @@ spec:
         {{- end }}
       enableServiceLinks: false
       automountServiceAccountToken: false
+      {{- if .Values.serviceAccount.create }}
+      serviceAccountName: {{ .Values.serviceAccount.name | default (include "open-webui.name" .) }}
+      {{- else }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
